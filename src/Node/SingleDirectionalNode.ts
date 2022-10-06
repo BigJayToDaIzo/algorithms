@@ -22,8 +22,9 @@ export class SingleDirectionalNode<T> {
 		return this._next;
 	}
 
-	toString(){
-		return `data: ${this.data}, next: {${this.next}}`;
+	toString(): string {
+		if(this.next) return `data: ${this.data}, next: {${this.next.data}}`;
+		else return `data: ${this.data}, next: null`;
 	}
 }
 
