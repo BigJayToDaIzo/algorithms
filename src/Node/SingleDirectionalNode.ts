@@ -1,29 +1,29 @@
 export class SingleDirectionalNode<T> {
-  _data?: T;
-  _next?: SingleDirectionalNode<T>;
-  constructor(data?: T, next?: SingleDirectionalNode<T>){
-      this._data = data;
-      this._next = next;
-  }
+	_data: T;
+	_next: SingleDirectionalNode<T> | null;
+	constructor(data: T){
+		this._data = data;
+		this._next = null;
+	}
 
-  setData(data: T): void { 
-      this._data = data;
-  }
+	public set data(data: T){ 
+		this._data = data;
+	}
 
-  getData(){
-    return this._data;
-  }
+	public get data(): T{
+		return this._data;
+	}
   
-  setNext(node: SingleDirectionalNode<T>): void{
-    this._next = node;
-  }
+	public set next(node: SingleDirectionalNode<T> | null){
+		this._next = node;
+	}
 
-  getNext(){
-    return this._next;
-  }
+	public get next(): SingleDirectionalNode<T> | null{
+		return this._next;
+	}
 
-  toString(){
-    return `data: ${this._data}, next: {${this._next}}`;
-  }
+	toString(){
+		return `data: ${this.data}, next: {${this.next}}`;
+	}
 }
 
