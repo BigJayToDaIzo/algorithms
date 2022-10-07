@@ -11,4 +11,6 @@ console.log(node1.toString());
 node1.prev = node2;
 node2.next = node1;
 console.log(node1.toString());
+console.log(node2.toString());
+
 // eventually build front end for webapp

@@ -1,10 +1,19 @@
-import { SingleDirectionalNode } from "./SingleDirectionalNode";
-
-export class BiDirectionalNode<T> extends SingleDirectionalNode<T> {
+export class BiDirectionalNode<T>{
+	_data: T;
+	_next: BiDirectionalNode<T> | null;
 	_prev: BiDirectionalNode<T> | null;
 	constructor(data: T){
-		super(data);
+		this._data = data;
+		this._next = null;
 		this._prev = null;
+	}
+
+	public get next(): BiDirectionalNode<T> | null {
+		return this._next;
+	}
+
+	public set next(node: BiDirectionalNode<T> | null){
+		this._next = node;
 	}
 
 	public get prev(): BiDirectionalNode<T> | null {
@@ -13,6 +22,14 @@ export class BiDirectionalNode<T> extends SingleDirectionalNode<T> {
 
 	public set prev(node: BiDirectionalNode<T> | null){
 		this._prev = node;
+	}
+
+	public get data(): T{
+		return this._data;
+	}
+
+	public set data(data: T){
+		this._data = data;
 	}
 
 	toString(): string {
