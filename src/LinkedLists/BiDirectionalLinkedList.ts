@@ -35,24 +35,24 @@ export class BiDirectionalLinkedList<T> {
 	}
 
 	popHead(): BiDirectionalNode<T> | undefined {
-		if(this._head === this._tail) return;
-		const poppedHead = this._head;
-		const newHead = poppedHead._next;
+		if(this.head === this.tail) return;
+		const poppedHead = this.head;
+		const newHead = poppedHead.next;
 		if(newHead != null){
-			newHead._prev = null;
-			this._head = newHead;
+			newHead.prev = null;
+			this.head = newHead;
 		}
 		return poppedHead;
 
 	}
 
 	popTail(): BiDirectionalNode<T> | undefined {
-		if(this._head === this._tail) return;
-		const poppedTail = this._tail;
-		const newTail = poppedTail._prev;
+		if(this.head === this.tail) return;
+		const poppedTail = this.tail;
+		const newTail = poppedTail.prev;
 		if(newTail != null){
-			newTail._next = null;
-			this._tail = newTail;
+			newTail.next = null;
+			this.tail = newTail;
 		}
 		return poppedTail;
 	}
