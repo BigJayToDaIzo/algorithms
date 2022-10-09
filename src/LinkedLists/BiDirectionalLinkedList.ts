@@ -58,13 +58,27 @@ export class BiDirectionalLinkedList<T> {
 	}
 
 	popByData(data: T): BiDirectionalNode<T> | undefined {
-		if(this._head._data === data){
+		if(this.head.data === data){
 			return this.popHead();
-		} else if(this._tail._data === data){
+		} else if(this.tail.data === data){
 			return this.popTail();
+		} else {
+			let prevNode = this.head;
+			let iterNode = prevNode.next;
+			while(iterNode != null){
+				if(iterNode.data !== data){
+					prevNode = iterNode;
+					if(iterNode.next != null) iterNode = iterNode.next;
+				}
+				// perform all null checks
+				if(iterNode.next != null) {
+					const nextNode = iterNode.next;
+					prevNode.next = nextNode;
+					nextNode.prev = prevNode;
+					return iterNode;
+				}
+			}
 		}
 		return;
-
-	}
-
+	}	
 }

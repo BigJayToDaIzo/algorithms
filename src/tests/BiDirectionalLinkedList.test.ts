@@ -97,15 +97,15 @@ describe('BiDirectional LinkedList test suite', () => {
 		expect(linkedList.tail).toBe(node1);
 	});
 
-	// test('popByData() returns, removes and properly sets pointers when between head/tail', () => {
-	// 	linkedList.tail = node2;
-	// 	const node3 = new BiDirectionalNode<string>('Node 3');
-	// 	linkedList.tail = node3;
-	// 	linkedList.popByData('Node 2');
-	// 	expect(node1.next).toBe(node3);
-	// 	expect(node3.prev).toBe(node1);
-
-	// });
+	test('popByData() returns, removes and properly sets pointers when between head/tail', () => {
+		linkedList.tail = node2;
+		const node3 = new BiDirectionalNode<string>('Node 3');
+		linkedList.tail = node3;
+		const poppedNode = linkedList.popByData('Node 2');
+		expect(poppedNode).toBe(node2);
+		expect(node1.next).toBe(node3);
+		expect(node3.prev).toBe(node1);
+	});
 
 	test('popByData() returns undefined when the node not in list', () => {
 		expect(linkedList.popByData('Node 2')).toBeUndefined();
