@@ -1,16 +1,18 @@
 // imports of various algorithm classes
-import { BiDirectionalNode } from "./Node/BiDirectionalNode";
+import { SingleDirectionalNode } from "./Node/SingleDirectionalNode";
+import { LinkedList } from "./LinkedLists/LinkedList";
 
 // manipulation of the algorithms take place here
-const node1 = new BiDirectionalNode<string>('Node 1');
-const node2 = new BiDirectionalNode<string>('Node 2');
-node1.next = node2;
-node2.prev = node1;
-console.log(node2.toString());
-console.log(node1.toString());
-node1.prev = node2;
-node2.next = node1;
-console.log(node1.toString());
-console.log(node2.toString());
+const node1 = new SingleDirectionalNode<string>('Node 1');
+const node2 = new SingleDirectionalNode<string>('Node 2');
+const node3 = new SingleDirectionalNode<string>('Node 3');
+const node4 = new SingleDirectionalNode<string>('Node 4');
+const linkedList = new LinkedList(node1);
+linkedList.addToTail(node2);
+linkedList.addToTail(node3);
+linkedList.addToTail(node4);
+linkedList.swapElements('Node 2', 'Node 4');
+console.log(linkedList.toString());
+
 
 // eventually build front end for webapp
