@@ -49,7 +49,18 @@ describe('LinkedList<string> test suite', () => {
 
 	});
 
-	test('swapElements() swaps elements and updates pointers if elems are not head/tail and not connected', () => {
+	test('swapElements() swaps elements and updates pointers if elem is head', () => {
+		const node3 = new SingleDirectionalNode<string>('Node 3');
+		const node4 = new SingleDirectionalNode<string>('Node 4');
+		linkedList1.addToTail(node2);
+		linkedList1.addToTail(node3);
+		linkedList1.addToTail(node4);
+		linkedList1.swapElements('Node 2', 'Node 1');
+		expect(linkedList1.head).toBe(node2);
+		expect(node2.next).toBe(node1);
+	});
+
+	test('swapElements() swaps elements and updates pointers if elems are non-adjacent', () => {
 		const node3 = new SingleDirectionalNode<string>('Node 3');
 		const node4 = new SingleDirectionalNode<string>('Node 4');
 		const node5 = new SingleDirectionalNode<string>('Node 5');
@@ -63,17 +74,6 @@ describe('LinkedList<string> test suite', () => {
 
 	});
 
-	test('swapElements() swaps elements and updates pointers if elem is head', () => {
-		const node3 = new SingleDirectionalNode<string>('Node 3');
-		const node4 = new SingleDirectionalNode<string>('Node 4');
-		linkedList1.addToTail(node2);
-		linkedList1.addToTail(node3);
-		linkedList1.addToTail(node4);
-		linkedList1.swapElements('Node 2', 'Node 1');
-		expect(linkedList1.head).toBe(node2);
-		expect(node2.next).toBe(node1);
-	});
-
 	test('swapElements() swaps elems and updates pointers if elem at end of list', () => {
 		const node3 = new SingleDirectionalNode<string>('Node 3');
 		const node4 = new SingleDirectionalNode<string>('Node 4');
@@ -84,5 +84,35 @@ describe('LinkedList<string> test suite', () => {
 		expect(node2.next).toBeNull();
 		expect(node4.next).toBe(node3);
 	});
+
+	test('swapElements() swaps elems and updates pointers if elems are adjacent', () => {
+		const node3 = new SingleDirectionalNode<string>('Node 3');
+		const node4 = new SingleDirectionalNode<string>('Node 4');
+		linkedList1.addToTail(node2);
+		linkedList1.addToTail(node3);
+		linkedList1.addToTail(node4);
+		linkedList1.swapElements('Node 2', 'Node 3');
+		expect(node1.next).toBe(node3);
+		expect(node3.next).toBe(node2);
+		expect(node2.next).toBe(node4);
+	});
+
+	test('swapElements() does nothing & logs console if elems are the same', () =>{
+		const logSpy = jest.spyOn(console, 'log');
+		linkedList1.addToTail(node2);
+		linkedList1.swapElements('Node 2', 'Node 2');
+		expect(node1.next).toBe(node2);
+		expect(node2.next).toBeNull();
+		expect(logSpy).toHaveBeenCalledWith('Elements are identical, no swap executed.');
+	});
+
+	test('swapElements() does nothing & logs console if both elems not found', () => {
+		const logSpy = jest.spyOn(console, 'log');
+		linkedList1.addToTail(node2);
+		linkedList1.swapElements('Node 2', 'Node 3');
+		expect(node2.next).toBeNull();
+		expect(logSpy).toHaveBeenCalledWith('Both elements not found, no swap executed.');
+	});
+
 
 });

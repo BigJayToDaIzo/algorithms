@@ -50,39 +50,48 @@ export class LinkedList<T>{
 		let swap1Prev = null;
 		let swap2Prev = null;
 		let iterNode = this.head;
-		while(iterNode.next){
-			if(iterNode.data !== data1){
-				if(!swap1) swap1Prev = iterNode;
+		if(data1 === data2){
+			console.log('Elements are identical, no swap executed.');
+		}else{
+			while(iterNode.next){
+				if(iterNode.data !== data1 && !swap1){
+					swap1Prev = iterNode;
+				}else if(!swap1){
+					swap1 = iterNode;
+				}
+				if(iterNode.data !== data2 && !swap2){
+					swap2Prev = iterNode;
+				}else if(!swap2){
+					swap2 = iterNode;
+				}
+				iterNode = iterNode.next;
+				// captures and checks tail element
+				if(iterNode?.next === null){
+					if(iterNode.data === data1) swap1 = iterNode;
+					if(iterNode.data === data2) swap2 = iterNode;
+				}
+			}
+	
+			if(swap1 && swap2){
+				//swap-o change-o
+				if(!swap1Prev){
+					this._head = swap2;
+				} 
+				else{
+					swap1Prev.next = swap2;
+				} 
+				if(!swap2Prev) {
+					this._head = swap1;
+				}
+				else{
+					swap2Prev.next = swap1;
+				} 
+				const temp = swap1.next;
+				swap1.next = swap2.next;
+				swap2.next = temp;
 			}else{
-				if(!swap1) swap1 = iterNode;
+				console.log('Both elements not found, no swap executed.');
 			}
-			if(iterNode.data !== data2){
-				if(!swap2) swap2Prev = iterNode;
-			}else{
-				if(!swap2) swap2 = iterNode;
-			}
-			iterNode = iterNode.next;
-			// HOW DO WE CAPTURE TAIL?!
-			
-		}
-
-		if(swap1 && swap2){
-			//swap-o change-o
-			if(!swap1Prev){
-				this._head = swap2;
-			} 
-			else{
-				swap1Prev.next = swap2;
-			} 
-			if(!swap2Prev) {
-				this._head = swap1;
-			}
-			else{
-				swap2Prev.next = swap1;
-			} 
-			const temp = swap1.next;
-			swap1.next = swap2.next;
-			swap2.next = temp;
 		}
 	}
 
