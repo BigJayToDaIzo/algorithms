@@ -12,13 +12,13 @@ export class LinkedList<T>{
 	}
 
 	addToHead(node: SingleDirectionalNode<T>){
-		const previousHead = this._head;
+		const previousHead = this.head;
 		node.next = previousHead;
 		this._head = node;
 	}
 
 	addToTail(node: SingleDirectionalNode<T>){
-		let iterNode = this._head;
+		let iterNode = this.head;
 		while(iterNode.next){
 			iterNode = iterNode.next;
 		}
@@ -26,7 +26,7 @@ export class LinkedList<T>{
 	}
 
 	removeFromHead(): SingleDirectionalNode<T>{
-		const removedHead = this._head;
+		const removedHead = this.head;
 		if(this._head._next){
 			this._head = this._head._next;	
 		}
@@ -93,6 +93,28 @@ export class LinkedList<T>{
 				console.log('Both elements not found, no swap executed.');
 			}
 		}
+	}
+
+	nthLastNode(n: number): SingleDirectionalNode<T> | null{
+		let current = null;
+		let tailSeeker = this.head;
+		let count = 1;
+		while(tailSeeker.next){
+			tailSeeker = tailSeeker.next;
+			if(count >= n){
+				if(!current){
+					current = this.head;
+				}
+				current = current.next;
+			}
+			count++;
+		}
+		if(count < n){
+			console.log('n exceeds length of list');
+			return null;
+		}
+		if(current) return current;
+		return this.head;
 	}
 
 	toString(): string {

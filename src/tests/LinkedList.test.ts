@@ -114,5 +114,26 @@ describe('LinkedList<string> test suite', () => {
 		expect(logSpy).toHaveBeenCalledWith('Both elements not found, no swap executed.');
 	});
 
+	test('nthLastNode() returns the node n steps before the tail', () => {
+		const node3 = new SingleDirectionalNode<string>('Node 3');
+		const node4 = new SingleDirectionalNode<string>('Node 4');
+		linkedList1.addToTail(node2);
+		linkedList1.addToTail(node3);
+		linkedList1.addToTail(node4);		
+		expect(linkedList1.nthLastNode(1)).toBe(node4);
+		expect(linkedList1.nthLastNode(2)).toBe(node3);
+		expect(linkedList1.nthLastNode(3)).toBe(node2);
+		expect(linkedList1.nthLastNode(4)).toBe(node1); 
+
+	});
+
+	test('nthLastNode() returns null and logs console if n overflows list', () => {
+		const logSpy = jest.spyOn(console, 'log');
+		const node3 = new SingleDirectionalNode<string>('Node 3');
+		linkedList1.addToTail(node2);
+		linkedList1.addToTail(node3);
+		expect(linkedList1.nthLastNode(4)).toBeNull();
+		expect(logSpy).toHaveBeenCalledWith('n exceeds length of list');
+	});
 
 });
