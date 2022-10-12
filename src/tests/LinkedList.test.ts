@@ -1,160 +1,133 @@
-import { LinkedList } from '../LinkedLists/LinkedList';
 import { SingleDirectionalNode } from '../Node/SingleDirectionalNode';
+import { generateTestLinkedList } from './helpers/generateTestLinkedList';
 
 describe('LinkedList<string> test suite', () => {
-	let linkedList1: LinkedList<string>;
-	let node1: SingleDirectionalNode<string>;
-	let node2: SingleDirectionalNode<string>;
-
-	beforeEach(() => {
-		node1 = new SingleDirectionalNode<string>('Node 1');
-		node2 = new SingleDirectionalNode<string>('Node 2');
-		linkedList1 = new LinkedList<string>(node1);
-	});
-
 	test('ctor works', () => {
-		expect(linkedList1).toBeTruthy();
+		const ll = generateTestLinkedList(1);
+		expect(ll).toBeTruthy();
 	});
 
-	test('_head getter returns the head', () => {
-		expect(linkedList1.head).toBe(node1);
+	test('head getter returns the _head', () => {
+		const ll = generateTestLinkedList(1);
+		expect(ll.head.data).toBe('Node 1');
 	});
 
-	test('addToHead() updates the head', () =>{
-		expect(linkedList1.head).toBe(node1);
-		linkedList1.addToHead(node2);
-		expect(linkedList1.head).toBe(node2);
-		expect(node2.next).toBe(node1);
+	test('pushHead() updates the head', () =>{
+		const ll = generateTestLinkedList(1);
+		const node2 = new SingleDirectionalNode<string>('Node 2');
+		ll.pushHead(node2);
+		expect(ll.head).toBe(node2);
+		expect(node2.next?.data).toBe('Node 1');
 	});
 
-	test('removeFromHead() updates head', () => {
-		linkedList1.addToHead(node2);
-		const removedHead = linkedList1.removeFromHead();
-		expect(removedHead).toBe(node2);
-		expect(linkedList1.head).toBe(node1);
+	test('popHead() removes and returns head', () => {
+		const ll = generateTestLinkedList(2);
+		const poppedHead = ll.popHead();
+		expect(poppedHead.data).toBe('Node 1');
+		expect(ll.head.data).toBe('Node 2');
 	});
 
-	test('addToTail() adds node to end of list', () => {
-		linkedList1.addToTail(node2);
-		expect(node1.next).toBe(node2);
-		expect(node2.next).toBeNull();
+	test('pushTail() adds node to end of list', () => {
+		const ll = generateTestLinkedList(1);
+		const node2 = new SingleDirectionalNode<string>('Node 2');
+		ll.pushTail(node2);
+		expect(ll.head.next).toBe(node2);
 	});
 
-	test('removeTail() removes node from end of list', () => {
-		const node3 = new SingleDirectionalNode<string>('Node 3');
-		linkedList1.addToTail(node2);
-		expect(node1.next).toBe(node2);
-		linkedList1.addToTail(node3);
-		expect(node2.next).toBe(node3);
+	test('popTail() removes and returns node from end of list', () => {
+		const ll = generateTestLinkedList(2);
+		const poppedTail = ll.removeTail();
+		expect(ll.head.next).toBeNull();
+		expect(poppedTail.data).toBe('Node 2');		
 
+	});
+
+	test('findElement() finds and returns element', () => {
+		const ll = generateTestLinkedList(5);
+		const elem = ll.findElement('Node 3');
+		expect(elem?.data).toBe('Node 3');
+		const elemIsHead = ll.findElement('Node 1');
+		expect(elemIsHead?.data).toBe('Node 1');
+		const elemIsTail = ll.findElement('Node 5');
+		expect(elemIsTail?.data).toBe('Node 5');
+	});
+
+	test('findElement() returns null if element does not exist', () => {
+		const ll = generateTestLinkedList(3);
+		expect(ll.findElement('Node 99')).toBeNull();
 	});
 
 	test('swapElements() swaps elements and updates pointers if elem is head', () => {
-		const node3 = new SingleDirectionalNode<string>('Node 3');
-		const node4 = new SingleDirectionalNode<string>('Node 4');
-		linkedList1.addToTail(node2);
-		linkedList1.addToTail(node3);
-		linkedList1.addToTail(node4);
-		linkedList1.swapElements('Node 2', 'Node 1');
-		expect(linkedList1.head).toBe(node2);
-		expect(node2.next).toBe(node1);
+		const ll = generateTestLinkedList(3);
+		ll.swapElements('Node 2', 'Node 1');
+		expect(ll.head.data).toBe('Node 2');
+		const node2 = ll.findElement('Node 2');
+		expect(node2?.next).toBe(ll.findElement('Node 1'));
 	});
 
 	test('swapElements() swaps elements and updates pointers if elems are non-adjacent', () => {
-		const node3 = new SingleDirectionalNode<string>('Node 3');
-		const node4 = new SingleDirectionalNode<string>('Node 4');
-		const node5 = new SingleDirectionalNode<string>('Node 5');
-		linkedList1.addToTail(node2);
-		linkedList1.addToTail(node3);
-		linkedList1.addToTail(node4);
-		linkedList1.addToTail(node5);
-		linkedList1.swapElements('Node 2', 'Node 4');
-		expect(node1.next).toBe(node4);
-		expect(node2.next).toBe(node5);
+		const ll = generateTestLinkedList(5);
+		ll.swapElements('Node 2', 'Node 4');
+		expect(ll.findElement('Node 1')?.next).toBe(ll.findElement('Node 4'));
+		expect(ll.findElement('Node 3')?.next).toBe(ll.findElement('Node 2'));
 
 	});
 
 	test('swapElements() swaps elems and updates pointers if elem at end of list', () => {
-		const node3 = new SingleDirectionalNode<string>('Node 3');
-		const node4 = new SingleDirectionalNode<string>('Node 4');
-		linkedList1.addToTail(node2);
-		linkedList1.addToTail(node3);
-		linkedList1.addToTail(node4);
-		linkedList1.swapElements('Node 2', 'Node 4');
-		expect(node2.next).toBeNull();
-		expect(node4.next).toBe(node3);
+		const ll = generateTestLinkedList(4);
+		ll.swapElements('Node 2', 'Node 4');
+		expect(ll.findElement('Node 1')?.next).toBe(ll.findElement('Node 4'));
+		expect(ll.findElement('Node 2')?.next).toBeNull();
 	});
 
 	test('swapElements() swaps elems and updates pointers if elems are adjacent', () => {
-		const node3 = new SingleDirectionalNode<string>('Node 3');
-		const node4 = new SingleDirectionalNode<string>('Node 4');
-		linkedList1.addToTail(node2);
-		linkedList1.addToTail(node3);
-		linkedList1.addToTail(node4);
-		linkedList1.swapElements('Node 2', 'Node 3');
-		expect(node1.next).toBe(node3);
-		expect(node3.next).toBe(node2);
-		expect(node2.next).toBe(node4);
+		const ll = generateTestLinkedList(4);
+		ll.swapElements('Node 2', 'Node 3');
+		expect(ll.findElement('Node 1')?.next).toBe(ll.findElement('Node 3'));
+		expect(ll.findElement('Node 3')?.next).toBe(ll.findElement('Node 2'));
+		expect(ll.findElement('Node 2')?.next).toBe(ll.findElement('Node 4'));
 	});
 
 	test('swapElements() does nothing & logs console if elems are the same', () =>{
+		const ll = generateTestLinkedList(2);
 		const logSpy = jest.spyOn(console, 'log');
-		linkedList1.addToTail(node2);
-		linkedList1.swapElements('Node 2', 'Node 2');
-		expect(node1.next).toBe(node2);
-		expect(node2.next).toBeNull();
+		ll.swapElements('Node 2', 'Node 2');
+		expect(ll.findElement('Node 1')?.next).toBe(ll.findElement('Node 2'));
+		expect(ll.findElement('Node 2')?.next).toBeNull;
 		expect(logSpy).toHaveBeenCalledWith('Elements are identical, no swap executed.');
 	});
 
 	test('swapElements() does nothing & logs console if both elems not found', () => {
+		const ll = generateTestLinkedList(2);
 		const logSpy = jest.spyOn(console, 'log');
-		linkedList1.addToTail(node2);
-		linkedList1.swapElements('Node 2', 'Node 3');
-		expect(node2.next).toBeNull();
+		ll.swapElements('Node 2', 'Node 3');
+		expect(ll.findElement('Node 2')?.next).toBeNull();
 		expect(logSpy).toHaveBeenCalledWith('Both elements not found, no swap executed.');
 	});
 
 	test('nthLastNode() returns the node n steps before the tail', () => {
-		const node3 = new SingleDirectionalNode<string>('Node 3');
-		const node4 = new SingleDirectionalNode<string>('Node 4');
-		linkedList1.addToTail(node2);
-		linkedList1.addToTail(node3);
-		linkedList1.addToTail(node4);		
-		expect(linkedList1.nthLastNode(1)).toBe(node4);
-		expect(linkedList1.nthLastNode(2)).toBe(node3);
-		expect(linkedList1.nthLastNode(3)).toBe(node2);
-		expect(linkedList1.nthLastNode(4)).toBe(node1); 
-
+		const ll = generateTestLinkedList(4);
+		expect(ll.nthLastNode(1)).toBe(ll.findElement('Node 4'));
+		expect(ll.nthLastNode(2)).toBe(ll.findElement('Node 3'));
+		expect(ll.nthLastNode(3)).toBe(ll.findElement('Node 2'));
+		expect(ll.nthLastNode(4)).toBe(ll.findElement('Node 1')); 
 	});
 
 	test('nthLastNode() returns null and logs console if n overflows list', () => {
 		const logSpy = jest.spyOn(console, 'log');
-		const node3 = new SingleDirectionalNode<string>('Node 3');
-		linkedList1.addToTail(node2);
-		linkedList1.addToTail(node3);
-		expect(linkedList1.nthLastNode(4)).toBeNull();
+		const ll = generateTestLinkedList(3);
+		expect(ll.nthLastNode(4)).toBeNull();
 		expect(logSpy).toHaveBeenCalledWith('n exceeds length of list');
 	});
 
 	test('findMiddle() returns middle node in an odd length list', () => {
-		const node3 = new SingleDirectionalNode<string>('Node 3');
-		const node4 = new SingleDirectionalNode<string>('Node 4');
-		const node5 = new SingleDirectionalNode<string>('Node 5');
-		linkedList1.addToTail(node2);
-		linkedList1.addToTail(node3);
-		linkedList1.addToTail(node4);
-		linkedList1.addToTail(node5);
-		expect(linkedList1.findMiddle()).toBe(node3);
-
+		const ll = generateTestLinkedList(5);
+		expect(ll.findMiddle()).toBe(ll.findElement('Node 3'));
 	});
 
 	test('findMiddle() returns right weighted middle in even length list', () => {
-		const node3 = new SingleDirectionalNode<string>('Node 3');
-		const node4 = new SingleDirectionalNode<string>('Node 4');
-		linkedList1.addToTail(node2);
-		linkedList1.addToTail(node3);
-		linkedList1.addToTail(node4);
-		expect(linkedList1.findMiddle()).toBe(node3);
+		const ll = generateTestLinkedList(4);
+		expect(ll.findMiddle()).toBe(ll.findElement('Node 3'));
 	});
 
 });

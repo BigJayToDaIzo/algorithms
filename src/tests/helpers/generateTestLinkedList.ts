@@ -6,7 +6,7 @@ export function generateTestLinkedList(n: number): LinkedList<string> {
 	const list = new LinkedList<string>(initNode);
 	for(let i = 2; i <= n; i++){
 		const node = new SingleDirectionalNode<string>(`Node ${i}`);
-		list.addToTail(node);
+		list.pushTail(node);
 	}
 	return list;
 }

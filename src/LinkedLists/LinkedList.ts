@@ -11,13 +11,13 @@ export class LinkedList<T>{
 		return this._head;
 	}
 
-	addToHead(node: SingleDirectionalNode<T>){
+	pushHead(node: SingleDirectionalNode<T>){
 		const previousHead = this.head;
 		node.next = previousHead;
 		this._head = node;
 	}
 
-	addToTail(node: SingleDirectionalNode<T>){
+	pushTail(node: SingleDirectionalNode<T>){
 		let iterNode = this.head;
 		while(iterNode.next){
 			iterNode = iterNode.next;
@@ -25,12 +25,12 @@ export class LinkedList<T>{
 		iterNode.next = node;
 	}
 
-	removeFromHead(): SingleDirectionalNode<T>{
-		const removedHead = this.head;
+	popHead(): SingleDirectionalNode<T>{
+		const poppedHead = this.head;
 		if(this._head._next){
 			this._head = this._head._next;	
 		}
-		return removedHead;
+		return poppedHead;
 	}
 
 	removeTail(): SingleDirectionalNode<T> {
@@ -42,6 +42,16 @@ export class LinkedList<T>{
 		}
 		prevNode.next = null;
 		return tailFinder;
+	}
+
+	findElement(data: string): SingleDirectionalNode<T> | null {
+		let iterNode = this.head;
+		while(iterNode.next){
+			if(iterNode.data === data) return iterNode;
+			iterNode = iterNode.next;
+			if(iterNode.data === data) return iterNode;
+		}
+		return null;
 	}
 
 	swapElements(data1: T, data2: T): void{
