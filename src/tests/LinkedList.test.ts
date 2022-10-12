@@ -136,4 +136,25 @@ describe('LinkedList<string> test suite', () => {
 		expect(logSpy).toHaveBeenCalledWith('n exceeds length of list');
 	});
 
+	test('findMiddle() returns middle node in an odd length list', () => {
+		const node3 = new SingleDirectionalNode<string>('Node 3');
+		const node4 = new SingleDirectionalNode<string>('Node 4');
+		const node5 = new SingleDirectionalNode<string>('Node 5');
+		linkedList1.addToTail(node2);
+		linkedList1.addToTail(node3);
+		linkedList1.addToTail(node4);
+		linkedList1.addToTail(node5);
+		expect(linkedList1.findMiddle()).toBe(node3);
+
+	});
+
+	test('findMiddle() returns right weighted middle in even length list', () => {
+		const node3 = new SingleDirectionalNode<string>('Node 3');
+		const node4 = new SingleDirectionalNode<string>('Node 4');
+		linkedList1.addToTail(node2);
+		linkedList1.addToTail(node3);
+		linkedList1.addToTail(node4);
+		expect(linkedList1.findMiddle()).toBe(node3);
+	});
+
 });

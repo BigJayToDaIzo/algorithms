@@ -117,6 +117,22 @@ export class LinkedList<T>{
 		return this.head;
 	}
 
+	findMiddle(): SingleDirectionalNode<T> | null{
+		let fastPointer = this.head;
+		let slowPointer = this.head;
+		while(fastPointer.next){
+			fastPointer = fastPointer.next;
+			if(fastPointer.next) {
+				fastPointer = fastPointer.next;
+				if(slowPointer.next) slowPointer = slowPointer.next;
+			}else{
+				if(slowPointer.next) slowPointer = slowPointer.next;
+			}
+			
+		}
+		return slowPointer;
+	}
+
 	toString(): string {
 		let currentNode = this._head;
 		let output = '<head> ';
