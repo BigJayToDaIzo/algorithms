@@ -36,7 +36,7 @@ describe('LinkedList<string> test suite', () => {
 
 	test('popTail() removes and returns node from end of list', () => {
 		const ll = generateTestLinkedList(2);
-		const poppedTail = ll.removeTail();
+		const poppedTail = ll.popTail();
 		expect(ll.head.next).toBeNull();
 		expect(poppedTail.data).toBe('Node 2');		
 

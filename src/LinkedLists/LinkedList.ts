@@ -33,7 +33,7 @@ export class LinkedList<T>{
 		return poppedHead;
 	}
 
-	removeTail(): SingleDirectionalNode<T> {
+	popTail(): SingleDirectionalNode<T> {
 		let tailFinder = this.head;
 		let prevNode = tailFinder;
 		while(tailFinder?.next){
