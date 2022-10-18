@@ -2,7 +2,7 @@ import { SingleDirectionalNode } from '../Node/SingleDirectionalNode';
 
 export class LinkedList<T>{
 	_head: SingleDirectionalNode<T>;
-	constructor(node: SingleDirectionalNode<T>){
+	constructor(node: SingleDirectionalNode<T> ){
 		this._head = node;
 
 	}
