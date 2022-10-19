@@ -1,20 +1,20 @@
 import { NullableLinkedList } from '../LinkedLists/NullableLinkedList';
-import { SingleDirectionalNode } from '../Node/SingleDirectionalNode';
+import { KVPair, KVPairSingleDirectionalNode } from '../Node/KVPairSingleDirectionalNode';
 
 describe('NullableLinkedList test suite', () => {
-	let nll: NullableLinkedList<string>;
-	let ll: NullableLinkedList<string>;
-	let node1: SingleDirectionalNode<string>;
-	let node2: SingleDirectionalNode<string>;
-	let node3: SingleDirectionalNode<string>;
+	let nll: NullableLinkedList<KVPair>;
+	let ll: NullableLinkedList<KVPair>;
+	let node1: KVPairSingleDirectionalNode<KVPair>;
+	let node2: KVPairSingleDirectionalNode<KVPair>;
+	let node3: KVPairSingleDirectionalNode<KVPair>;
 
 	beforeEach(() => {
-		node1 = new SingleDirectionalNode<string>('Node 1');
-		node2 = new SingleDirectionalNode<string>('Node 2');
-		node3 = new SingleDirectionalNode<string>('Node 3');
+		node1 = new KVPairSingleDirectionalNode<KVPair>({key: 'Node 1', value: 'Node1Value'});
+		node2 = new KVPairSingleDirectionalNode<KVPair>({key: 'Node 2', value: 'Node2Value'});
+		node3 = new KVPairSingleDirectionalNode<KVPair>({key: 'Node 3', value: 'Node3Value'});
 
-		nll = new NullableLinkedList<string>();
-		ll = new NullableLinkedList<string>(node1);
+		nll = new NullableLinkedList<KVPair>();
+		ll = new NullableLinkedList<KVPair>(node1);
 	});
 
 
@@ -24,12 +24,12 @@ describe('NullableLinkedList test suite', () => {
 	});
 
 	test('head getter returns _head', () => {
-		expect(ll.head?.data).toBe('Node 1');
+		expect(ll.head).toBe(node1);
 	});
 
 	test('pushHead() sets head when list is empty', () => {
 		nll.pushHead(node1);
-		expect(nll.head?.data).toBe('Node 1');
+		expect(nll.head).toBe(node1);
 	});
 
 	test('pushHead() sets head and updates pointers of old head', () => {
@@ -55,18 +55,13 @@ describe('NullableLinkedList test suite', () => {
 		expect(node3.next).toBeNull();
 	});
 
-	test('findNode() returns node in list that contains node', () => {
+	test('findNodeByKey() returns node in list that contains node', () => {
 		ll.pushHead(node2);
-		expect(ll.findNode('Node 1')).toBe(node1);
-		expect(ll.findNode('Node 2')).toBe(node2);
+		expect(ll.findNodeByKey('Node 1')).toBe(node1);
+		expect(ll.findNodeByKey('Node 2')).toBe(node2);
+		expect(ll.findNodeByKey('Node 5')).toBeNull();
+
 
 	});
-
-	test('findNode() returns null when the node is not in the list', () => {
-		expect(ll.findNode('Node 1')).toBe(node1);
-		expect(ll.findNode('Node 5')).toBeNull();
-		
-	});
-
 
 });

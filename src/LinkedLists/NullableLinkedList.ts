@@ -1,17 +1,17 @@
-import { SingleDirectionalNode } from "../Node/SingleDirectionalNode";
+import { KVPair, KVPairSingleDirectionalNode } from "../Node/KVPairSingleDirectionalNode";
 
-export class NullableLinkedList<T>{
-	_head: SingleDirectionalNode<T> | null;
-	constructor(node: SingleDirectionalNode<T> | null = null){
+export class NullableLinkedList<KVPair>{
+	_head: KVPairSingleDirectionalNode<KVPair> | null;
+	constructor(node: KVPairSingleDirectionalNode<KVPair> | null = null){
 		this._head = node;
 
 	}
 
-	get head(): SingleDirectionalNode<T> | null {
+	get head(): KVPairSingleDirectionalNode<KVPair> | null {
 		return this._head;
 	}
 
-	pushHead(node: SingleDirectionalNode<T>): void {
+	pushHead(node: KVPairSingleDirectionalNode<KVPair>): void {
 		if(!this.head){
 			this._head = node;
 		}else{
@@ -21,7 +21,7 @@ export class NullableLinkedList<T>{
 		}
 	}
 
-	pushTail(node: SingleDirectionalNode<T>): void {
+	pushTail(node: KVPairSingleDirectionalNode<KVPair>): void {
 		if(!this.head){
 			this._head = node;
 		}else{
@@ -33,10 +33,10 @@ export class NullableLinkedList<T>{
 		}
 	}
 
-	findNode(data: string): SingleDirectionalNode<T> | null {
+	findNodeByKey(finder: string | number): KVPairSingleDirectionalNode<KVPair> | null {
 		let currentNode = this.head;
 		while(currentNode){
-			if(currentNode.data === data){
+			if(currentNode.data){
 				return currentNode;
 			}
 			currentNode = currentNode.next;
