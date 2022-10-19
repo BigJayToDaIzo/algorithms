@@ -16,26 +16,26 @@ describe('SingleDirectionalNode<string> test suite', () => {
 	// No need to test typing of args in ctor or functions thanks to TypeScript
 	// type safety
 
-	test('_data setter sets _data field', () => {
+	test('data getter returns _data', () => {
+		expect(node1.data).toBe('Node 1');
+	});
+
+	test('data setter sets _data field', () => {
 		node1.data = 'Node 2';
 		expect(node1._data).toBe('Node 2');
 	});
 
-	test('_data getter returns data', () => {
-		expect(node1.data).toBe('Node 1');
-	});
-
-	test('_next setter sets _next', () => {
-		node2 = new SingleDirectionalNode<string>('Node 2');
-		node1.next = node2;
-		expect(node1._next).toBe(node2);
-	});
-
-	test('_next getter returns next', () => {
+	test('next getter returns _next', () => {
 		expect(node1._next).toBeNull();
 		node2 = new SingleDirectionalNode<string>('Node 2');
 		node1.next = node2;
 		expect(node1.next).toBe(node2);
+	});
+
+	test('next setter sets _next', () => {
+		node2 = new SingleDirectionalNode<string>('Node 2');
+		node1.next = node2;
+		expect(node1._next).toBe(node2);
 	});
 
 });
